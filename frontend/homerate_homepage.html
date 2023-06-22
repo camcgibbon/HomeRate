@@ -1,0 +1,154 @@
+
+<html>
+<title style="height: 100%; margin: 0px; padding: 0px;">HomeRate</title>
+<head>
+    <h1  id = "heading" style="color:powderblue; background-color:darkslategrey; font-size:50px;">HomeRate</h1>
+ 	<script src="https://ajax.googleapis.com/ajax/`libs/jquery/3.2.1/jquery.min.js"></script>
+  
+    <meta charset= "utf-8">
+    <style>
+    	body {
+		  font-family: Tahoma, sans-serif;
+		}
+		
+		#heading {
+			height: 10%;
+			vertical-align: middle;
+		}
+
+		#map {height: 50%;
+			width: 70%;
+			
+			margin-left: auto;
+  			margin-right: auto;
+			padding: 0px;
+		}
+		#searchInput
+		{
+		    height:30px;
+		    width: 750px;
+		    font-size:14pt;
+		}
+		html, body {
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+		}
+		#floating-panel {
+			position: absolute;
+			top: 10px;
+			right: 1%;
+			z-index: 5;
+			background-color: #fff;
+			border: 1px solid #999;
+			text-align: center;
+		}
+    </style>
+</head>
+
+<body style="text-align:center;">
+
+	<div style="color:darkslategrey;"> Use this website to finding accesibilty ratings for a propsective apartment! </div>
+  
+  	<h1>Apartment Search</h1>
+  	<form method = "POST"> 
+  	    <input id="searchInput" name="searchInput" class="controls" type="text" placeholder="Enter a location">	
+  	</form>
+    <div id="map"></div>
+    <!-- Display geolocation data -->
+    <div>
+    	<!-- 
+    <p class="geo-data" style ="text-align:center;">
+        <p>Full Address: <span id="location"></span></p>
+        <p>Country: <span id="country"></span></p>
+        <p>Latitude: <span id="lat"></span></p>
+        <p>Longitude: <span id="lon"></span></p>
+    </p> -->	
+    <p style="text-align:center;" class= "ratings" >
+        <p style="font-size:40px; font-family: Tahoma, sans-serif; color: cadetblue;">Overall Rating: <span id="overall_rating"></span></p>
+        <p style="font-size:30px; font-family: Tahoma; color: slategrey;">Bus Accessibility: <span id="bus_accessibility"></span></p>
+        <p style="font-size:30px; font-family: Tahoma; color: slategrey;">Food Accessibility: <span id="food_ccessibility:"></span></p>
+        <p style="font-size:30px; font-family: Tahoma;	color: slategrey;">University Accessibility: <span id="university_ccessibility:"></span></p>
+    </p>
+	</div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyCpWSReYqlzP2nnMzYoLSnqQVSaHZYnTrs&callback=initMap&libraries=places"></script>
+  <!--<script async defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyCpWSReYqlzP2nnMzYoLSnqQVSaHZYnTrs&callback=initMap"></script>-->
+
+  	<script>
+	function initMap() {
+	    var map = new google.maps.Map(document.getElementById('map'), {
+	      center: {lat: 40.1164, lng: -88.2434},
+	      zoom: 13
+	    });
+	    var input = document.getElementById('searchInput');
+	    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+	    var autocomplete = new google.maps.places.Autocomplete(input);
+	    autocomplete.bindTo('bounds', map);
+
+	    var infowindow = new google.maps.InfoWindow();
+	    var marker = new google.maps.Marker({
+	        map: map,
+	        anchorPoint: new google.maps.Point(0, -29)
+	    });
+
+    	autocomplete.addListener('place_changed', function() {
+        infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+        }
+  
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+        }
+        marker.setIcon(({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+    
+        var address = '';
+        if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+    
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        infowindow.open(map, marker);
+      
+        // Location details
+        for (var i = 0; i < place.address_components.length; i++) {
+            if(place.address_components[i].types[0] == 'postal_code'){
+                document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+            }
+            if(place.address_components[i].types[0] == 'country'){
+                document.getElementById('country').innerHTML = place.address_components[i].long_name;
+            }
+        }
+        document.getElementById('location').innerHTML = place.formatted_address;
+        document.getElementById('lat').innerHTML = place.geometry.location.lat();
+        document.getElementById('lon').innerHTML = place.geometry.location.lng();
+    	});
+	}
+	</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+`<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Explore apartments near you">
+    <meta name="description" content="">
+    <title>Search homes</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='nicepage.css') }}" media="screen">
+<link rel="stylesheet" href="{{ url_for('static',filename='Search-homes.css') }}" media="screen">
+    <script class="u-script" type="text/javascript" src="{{ url_for('static',filename='jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static',filename='nicepage.js') }}" defer=""></script>
+    <meta name="generator" content="Nicepage 5.0.7, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/6374679d2ce38dd6dc61e21eeb8a5f27.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Search homes">
+    <meta property="og:type" content="website">
+    <script src="https://ajax.googleapis.com/ajax/`libs/jquery/3.2.1/jquery.min.js"></script>
+  
+    <meta charset= "utf-8">
+    <style>
+      body {
+      font-family: Tahoma, sans-serif;
+    }
+    
+    #heading {
+      height: 10%;
+      vertical-align: middle;
+    }
+
+    #map {height: 50%;
+      width: 70%;
+      
+      margin-left: auto;
+        margin-right: auto;
+      padding: 0px;
+    }
+    #searchInput
+    {
+        height:30px;
+        width: 750px;
+        font-size:14pt;
+    }
+    html, body {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+    #floating-panel {
+      position: absolute;
+      top: 10px;
+      right: 1%;
+      z-index: 5;
+      background-color: #fff;
+      border: 1px solid #999;
+      text-align: center;
+    }
+    </style>
+  </head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-9456"><div class="u-clearfix u-sheet u-sheet-1">
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{ url_for('Home') }}" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{ url_for('SearchHomes') }}" style="padding: 10px 20px;">Search homes</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{ url_for('Contact') }}" style="padding: 10px 20px;">Contact</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('SearchHomes') }}">Search homes</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Contact') }}">Contact</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+        <a href="{{ url_for('Home') }}" class="u-border-2 u-border-grey-50 u-image u-logo u-image-1" data-image-width="1280" data-image-height="1280" title="Home">
+          <img src="{{ url_for('static',filename='images/6374679d2ce38dd6dc61e21eeb8a5f27.png') }}" class="u-logo-image u-logo-image-1">
+        </a>
+      </div></header>
+    
+
+    <body style="text-align:center;">
+
+  <div style="color:darkslategrey;"> Use this website to finding accesibilty ratings for a propsective apartment in Urbana-Champaign! </div>
+  
+    <form action = "http://localhost:5000/login" method = "post"> 
+    <input id="searchInput" class="controls" type="text" placeholder="Enter a location">  
+    </form>
+    <div id="map"></div>
+    <!-- Display geolocation data -->
+    <div>
+      <!-- 
+    <p class="geo-data" style ="text-align:center;">
+        <p>Full Address: <span id="location"></span></p>
+        <p>Country: <span id="country"></span></p>
+        <p>Latitude: <span id="lat"></span></p>
+        <p>Longitude: <span id="lon"></span></p>
+    </p> -->  
+    <form action="/Search" method="post">
+    <p style="text-align:center;" class= "ratings" >
+        <p style="font-size:30px; font-family: Tahoma; color: slategrey;">Bus Distance Rating: <span id="bus_accessibility"></span></p>
+        <p style="font-size:30px; font-family: Tahoma; color: slategrey;">Restaurant Distance Rating: <span id="food_accessibility"> </span></p>
+        <p style="font-size:30px; font-family: Tahoma;  color: slategrey;">Class Distance Rating: <span id="university_accessibility"> </span></p>
+    </p>
+  </form>
+  </div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyCpWSReYqlzP2nnMzYoLSnqQVSaHZYnTrs&callback=initMap&libraries=places"></script>
+  <!--<script async defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyCpWSReYqlzP2nnMzYoLSnqQVSaHZYnTrs&callback=initMap"></script>-->
+
+    <script>
+
+  function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.1164, lng: -88.2434},
+        zoom: 13
+      });
+      var input = document.getElementById('searchInput');
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo('bounds', map);
+
+      var infowindow = new google.maps.InfoWindow();
+      var marker = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+      });
+
+      autocomplete.addListener('place_changed', function() {
+        infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+        }
+  
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+        }
+        marker.setIcon(({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+    
+        var address = '';
+        if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+    
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        infowindow.open(map, marker);
+      
+        // Location details
+        /*
+        for (var i = 0; i < place.address_components.length; i++) {
+            if(place.address_components[i].types[0] == 'postal_code'){
+                document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+            }
+            if(place.address_components[i].types[0] == 'country'){
+                document.getElementById('country').innerHTML = place.address_components[i].long_name;
+            }
+        }*/
+        //document.getElementById('location').innerHTML = place.formatted_address;
+        //document.getElementById('lat').innerHTML = place.geometry.location.lat();
+        //document.getElementById('lon').innerHTML = place.geometry.location.lng();
+        console.log("test");
+
+        // send info to flask!!!
+        let location_info = place.formatted_address;
+        //const request = new XMLHttpRequest;
+        //request.open('POST', "/Search/"+location_info);
+        //window.location.replace("/Search/"+location_info);
+        //request.send();
+        fetch("/Search/"+location_info)
+          .then(response => response.json())
+          .then(response => response.bus)
+          .then(bus => document.getElementById('bus_accessibility').innerHTML = bus)
+
+        fetch("/Search/"+location_info)
+          .then(response => response.json())
+          .then(response => response.food)
+          .then(food => document.getElementById('food_accessibility').innerHTML = food)
+        
+        fetch("/Search/"+location_info)
+          .then(response => response.json())
+          .then(response => response.uni)
+          .then(uni => document.getElementById('university_accessibility').innerHTML = uni)
+
+        
+
+
+        
+      });
+  }
+  </script>
+  
+</body></html>
